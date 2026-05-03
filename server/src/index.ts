@@ -42,14 +42,12 @@ async function bootstrap(): Promise<void> {
   app.use('/api/grid', gridRoutes);
   app.use('/api/users', userRoutes);
 
-  // ── Serve frontend in production ───────────────────────────────────────
-  if (env.isProd) {
-    const publicDir = path.join(__dirname, '../public');
-    app.use(express.static(publicDir));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.join(publicDir, 'index.html'));
-    });
-  }
+  // ── Serve frontend ─────────────────────────────────────────────────────
+  const publicDir = path.join(__dirname, '../public');
+  app.use(express.static(publicDir));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(publicDir, 'index.html'));
+  });
 
   // ── Error handling ─────────────────────────────────────────────────────
   app.use(notFoundHandler);
