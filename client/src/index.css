@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #0a0f1e;
+    color: #f1f5f9;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Thin custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+}
+
+/* ── Tile system ──────────────────────────────────────────────────────────── */
+
+@layer components {
+  .tile {
+    flex-shrink: 0;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    position: relative;
+    transition: border-color 0.1s;
+    border-radius: 1px;
+  }
+
+  .tile--free {
+    cursor: pointer;
+  }
+  .tile--free:hover {
+    border-color: rgba(148, 163, 184, 0.6);
+    filter: brightness(1.4);
+    z-index: 1;
+  }
+
+  .tile--claimed {
+    cursor: default;
+  }
+
+  /* My tiles get a subtle white ring so the player can spot their territory */
+  .tile--mine {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  }
+
+  /* ── Claim flash animation ────────────────────────────────────────────── */
+  /*
+   * Applied for ~700ms when a tile transitions from free→claimed.
+   * Pure CSS keyframe: no JS animation loop, zero Framer Motion overhead
+   * across 2500 elements.
+   */
+  .tile--flash {
+    animation: tileFlash 0.45s ease-out forwards;
+    z-index: 5;
+  }
+
+  @keyframes tileFlash {
+    0% {
+      transform: scale(1);
+      filter: brightness(1);
+      box-shadow: none;
+    }
+    35% {
+      transform: scale(1.45);
+      filter: brightness(2);
+      box-shadow: 0 0 10px currentColor;
+      z-index: 10;
+    }
+    100% {
+      transform: scale(1);
+      filter: brightness(1);
+      box-shadow: none;
+    }
+  }
+}
+
+/* ── Utility overrides ────────────────────────────────────────────────────── */
+
+@layer utilities {
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+  }
+}
