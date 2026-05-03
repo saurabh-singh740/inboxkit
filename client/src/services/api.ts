@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import type { TileData, LeaderboardEntry, UserData } from '../types';
 
-const BASE_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? 'http://localhost:5000';
+const BASE_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
 
 const http: AxiosInstance = axios.create({
   baseURL: `${BASE_URL}/api`,

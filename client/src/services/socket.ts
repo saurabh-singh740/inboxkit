@@ -1,7 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 
 const SOCKET_URL =
-  (import.meta.env.VITE_SOCKET_URL as string | undefined) ?? 'http://localhost:5000';
+  (import.meta.env.VITE_SOCKET_URL as string | undefined) ?? window.location.origin;
 
 /**
  * Singleton socket service.
